@@ -34,14 +34,14 @@
       { name = 'buffer' },
     })
   })
-cmp.setup {
-  formatting = {
-    format = function(entry, vim_item)
-      vim_item.menu = entry:get_completion_item().detail
-      return vim_item
-    end
-  }
-}
+    cmp.setup {
+      formatting = {
+        format = function(entry, vim_item)
+          vim_item.menu = entry:get_completion_item().detail
+          return vim_item
+        end
+      }
+    }
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline('/', {
@@ -63,8 +63,9 @@ cmp.setup {
 
   local lsp_installer = require("nvim-lsp-installer")
 
-local nvim_lsp = require('lspconfig')
-
+  local nvim_lsp = require('lspconfig')
+  local lsp_status = require('lsp-status')
+  lsp_status.register_progress()
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -97,6 +98,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   require "lsp_signature".on_attach()
+  lsp_status.on_attach(client)
 end
   -- Register a handler that will be called for all installed servers.
   -- Alternatively, you may also register handlers on specific server instances instead (see example below).
@@ -115,7 +117,9 @@ end
     server:setup(opts)
   end)
 
-  require'lualine'.setup()
+  require'lualine'.setup {
+    sections = {lualine_c = {"filename", "require'lsp-status'.status()"}}
+  }
 
   require'nvim-tree'.setup {
       update_cwd = false,
@@ -126,17 +130,9 @@ end
         auto_resize = true
       }
   }
+--require'bufferline.state'.set_offset(31, 'FileTree')
+--  local tree = require('tree')
+  --tree.open()
+  --require('telescope').load_extension('fzf')
 
-  require('telescope').load_extension('fzf')
-
-  local tree ={}
-    tree.open = function ()
-       require'bufferline.state'.set_offset(31, 'FileTree')
-       require'nvim-tree'.find_file(true)
-    end
-
-    tree.close = function ()
-       require'bufferline.state'.set_offset(0)
-       require'nvim-tree'.close()
-    end
 
