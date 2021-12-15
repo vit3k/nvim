@@ -26,6 +26,7 @@ Plug 'ray-x/lsp_signature.nvim'
 
 Plug ('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
 Plug 'nvim-lua/lsp-status.nvim'
+Plug 'akinsho/toggleterm.nvim'
 vim.call('plug#end')
 
 require('plugins_config')

@@ -130,6 +130,8 @@ end
         auto_resize = true
       }
   }
+
+require("toggleterm").setup{}
 --require'bufferline.state'.set_offset(31, 'FileTree')
 --  local tree = require('tree')
   --tree.open()
