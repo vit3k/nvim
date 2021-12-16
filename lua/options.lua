@@ -16,3 +16,4 @@ vim.cmd("syntax enable")
 vim.cmd("colorscheme dracula")
 
 vim.o.completeopt="menu,menuone,noselect"
+vim.o.hidden = true
